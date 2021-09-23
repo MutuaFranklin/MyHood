@@ -1,0 +1,199 @@
+{%extends 'myhood/base.html'%}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+    <div id="content" class="content p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover"></div>
+
+            <div class="profile-header-content">
+                {% if profile.profile_pic %}
+
+                <div class="profile-header-img">
+                    <img src="{{profile.profile_pic.url}}" alt="" />
+                </div>
+
+                {% else %}
+                <div class="profile-header-img">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" />
+                </div>
+                {% endif %}
+
+                <div class="profile-header-info">
+                    <h5 class="m-t-sm">{{profile.user.username}}</h5>
+                    <p class="m-b-sm">{{profile.bio}}</p>
+                    <a href="{% url 'update-profile' profile.user.id%}" class="btn btn-xs btn-info mb-4">Edit
+                        Profile</a>
+                </div>
+            </div>
+
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="tab"
+                        onClick="return showPosts();">POSTS</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="tab"
+                        onClick="return showBusiness();">BUSINESSES</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="tab"
+                    onClick="return showNeighbors();">NEIGHBORS</a></li>
+            </ul>
+        </div>
+
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show">
+
+                            <div class="row row-space-2 " id="posts">
+                                <div class="m-b-10 m-2 small"><b>My Posts ({{posts.count}})</b></div>
+
+                                <div class="col-sm-8">
+                                    {% for post in posts%}
+                                    <div class="card post-card">
+                                        <div class="card-body">
+                                            <p class="card-text fw-bold">{{post.title}}</p>
+                                            <p class="card-text small">{{post.post}}</p>
+                                            <p class="card-text fw-light small">Posted {{post.date_posted|timesince}} ago</a></p>
+                    
+                    
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <p>No available posts</p>
+                                    {%endfor%}
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="row row-space-2 " id="business">
+                                <div class="m-b-10 m-2 small"><b>My Business ({{business.count}})</b></div>
+
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                        data-bs-target="#registerBizModal">
+                                        Register Business
+                                    </button>
+                                    <div class="d-flex">
+                                    {% for biz in business %}
+                                    
+                                        <div class="card m-2" style="width: 22rem;">
+                                            <img src="{{biz.biz_image.url}}" class="card-img-top mt-2" alt="...">
+                                            <div class="card-body biz-card">
+                                                <p class="card-text">{{biz.name}}</p>
+                                                <p class="card-text">{{biz.description}}</p>
+                                                <p class="card-text">{{post.title}}</p>
+
+                                            </div>
+                                            <div class="card-footer d-flex justify-content-center">
+                                                <img src="{% static 'images/icon.jpg' %}" data-bs-toggle="modal"
+                                                    data-bs-target="#businessDetails{{biz.id}}" height="90" alt="">
+
+                                                {% include "modals/businessDetails.html" %}
+                                            </div>
+
+                                        </div>
+                                        {% empty%}
+
+                                    <p>No registered businesses in your hood</p>
+
+                                    {%endfor%}
+                                    
+
+                                    
+                                </div>
+                        
+
+
+
+                                    {% include "modals/registerBizModal.html" %}
+
+
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="row row-space-2 " id="neighbors">
+                                {%if profile.user.id ==  request.user.id%}
+                                <div class="m-b-10 m-2 small"><b>My Neighbors ({{neighbors.count|add:"-1"}})</b></div>
+
+                                <div class="col-sm-8">
+                                    
+                                    {% for neighbor in neighbors %}
+                                        {% if neighbor.id != request.user.id%}
+
+                                        <div class="card mb-3 neighbor" style="max-width: 540px;">
+                                            <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="{{neighbor.profile_pic.url}}" class="img-fluid rounded-start" style="height: 120px;" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                <h5 class="card-title">{{neighbor.user.first_name}} {{neighbor.user.last_name}}</h5>
+                                                <p class="card-text">{{neighbor.user.username}}</p>
+                                                <a href="{%url 'userProfile' neighbor.user.username%}" class="card-text"><small class="text-muted">View Profile</small></a>
+                                                </div>
+                                            </div>
+                                            </div>
+                                         </div>
+                                        {%endif%}
+                                    {% empty %}
+                                    <p>No available neighbor</p>
+                                    {%endfor%}
+
+                                </div>
+                                {% else %}
+                                <p>You share same</p>
+                                {% endif%}
+
+
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 hidden-xs hidden-sm">
+                    <ul class="profile-info-list">
+                        <li class="title">PERSONAL INFORMATION</li>
+                        <li>
+                            <div class="field">Full name</div>
+                            <div class="value">{{profile.user.first_name}} {{profile.user.last_name}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Family name</div>
+                            <div class="value">{{profile.family_name}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Mobile</div>
+                            <div class="value">{{profile.mobile}}</div>
+                        </li>
+                        <li>
+                            <div class="field">General location</div>
+                            <div class="value">{{profile.general_location}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Hood</div>
+                            <div class="value">{{profile.hood}}</div>
+                        </li>
+
+                   
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
