@@ -1,0 +1,70 @@
+{%extends 'myhood/base.html'%}
+{% load static %}
+{% block content %}
+<div class="container search">
+  <div class="row">
+    {% if business %}
+    <h6 class="mt-5 result">Found {{ business|length }} business(s): {{b_message}}</h6>
+    {% for biz in business %}
+    <div class="card m-2" style="width: 24rem;">
+      <img src="{{biz.biz_image.url}}" class="card-img-top mt-2" alt="...">
+      <div class="card-body biz-card">
+        <p class="card-text">{{biz.name}}</p>
+        <p class="card-text">{{biz.description}}</p>
+        <p class="card-text">{{post.title}}</p>
+
+      </div>
+      <div class="card-footer d-flex justify-content-center">
+        <img src="{% static 'images/icon.jpg' %}" data-bs-toggle="modal" data-bs-target="#businessDetails{{biz.id}}"
+          height="90" alt="">
+
+        {% include "modals/businessDetails.html" %}
+      </div>
+
+    </div>
+
+    {% empty%}
+
+
+    {%endfor%}
+    {% else %}
+    <h6 class="mt-5 result"> Found 0 business: {{b_message}}</h6>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+    {% if  neighbors %}
+
+    <h6 class="mt-5 result">Found {{ neighbors|length }} neighbor(s): {{n_message}}</h6>
+
+      {% for neighbor in neighbors %}
+          {% if request.user.profile.hood == neighbor.hood%}
+
+    
+              <div class="card m-2" style="width: 24rem;">
+                <img src="{{neighbor.profile_pic.url}}" class="card-img-top mt-2" alt="...">
+                <div class="card-body biz-card">
+                  <p class="card-text">{{neighbor.user.username}}</p>
+                  <p class="card-text">{{neighbor.family_name}}</p>
+
+                </div>
+                <div class="card-footer d-flex justify-content-center">
+                  <img src="{%  url 'userProfile' neighbor.user.username %}" height="90" alt="">
+
+                </div>
+
+              </div>
+          {% else %}
+
+          {%endif%}
+
+
+      {%endfor%}
+    {% else %}
+    <h6 class="mt-5 result"> Found 0 neighbor: {{n_message}}</h6>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
