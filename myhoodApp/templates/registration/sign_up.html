@@ -1,0 +1,46 @@
+{%extends "myhood/base.html"%} 
+{% load bootstrap5 %}
+{%load static%}
+{% block content %}
+<div class="container-fluid signup">
+  <div class="row">
+    <div class="col-md-5 signup-image">
+      <img src="{% static 'images/sgbg.png' %}" width="100%"  height="50%" alt="">
+
+    </div> 
+    <div class="col-md-5 signup-form">
+      {% if reg_form.errors %}
+        <p> Some Information Might be Incorrect </p>
+      {% endif %}
+      <div class="panel panel-default mt-1">
+
+        <div class="panel-heading">
+          <h5 class="text-center fw-light">Sign Up</h5>
+        </div>
+        <div class="panel-body">
+
+         
+          <form action="" method="post" class="register-form fw-light m-2">
+            {% csrf_token %}
+            {% bootstrap_form reg_form%}
+           
+            <div class=" d-grid gap-1">
+              <button class="btn btn-primary" type="submit">Sign Up</button>
+            </div> 
+          <input type="hidden" name="next" value="{{next}}">
+          </form>
+          <div class="card m-2">
+            <div class="card-body mt-1 mb-1 mr-3 ml-3 dont-account d-flex justify-content-center">
+                <p class="fw-bold small"> Have an account? <a href="{% url 'login' %}" class="me-5">Log in</a></p>
+            </div>
+        </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
