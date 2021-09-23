@@ -1,0 +1,30 @@
+  <!-- Modal -->
+  <div class="modal fade" id="businessDetails{{biz.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header d-flex flex-column">
+                  <h6 class="modal-title" id="exampleModalLongTitle">{{biz.name}}</h6>
+                  <h5 class="modal-title fw-light small">{{biz.email}}</h5>
+                  <h5 class="modal-title fw-light small">{{biz.phone}}</h5>
+
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <img src="{{biz.biz_image.url}}" class="card-img-top modal-image" alt="..."
+                      style="height: 24rem; width: 29rem;">
+
+        
+              </div>
+              <div class="modal-footer d-flex flex-column alight-items-centre">
+                <p class="fw-bold">{{biz.description}}</p>
+                <p class="fw-bold"><i class="fas fa-map-marked-alt"></i></p>
+                <p class="small fw-bold">{{biz.hood}}</p>
+              </div>
+            <div class="modal-footer">
+                  
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close
+            </div>
+          </div>
+      </div>
+  </div>
