@@ -1,0 +1,73 @@
+{%extends "myhood/base.html"%}
+{% load bootstrap5 %}
+{% load static%}
+{% block content %}
+<div class="container-fluid login d-flex">
+<div class="row " style="margin-top: 7%;">   
+  
+    <div class="col-md-5 login-welcome mt-5">
+      <img src="{% static 'images/login.png' %}" style="width: 100%;"  alt="">
+      
+     </div>
+     <div class="col-md-5 login-form  mt-5">
+      {% if form.errors %}
+        <p> Password or Username is incorrect </p>
+      {% endif %}
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <h5 class="text-center fw-light">Sign In</h5>
+        </div>
+        <div class="panel-body">
+
+          <form action="" method="post" style="width: 100%;">
+            {% csrf_token %}
+            <div class="info">
+              <div class="form-floating mb-3 info">
+                <input type="text" name="username" class="form-control username" id="floatingInput"
+                  placeholder="Username">
+                <label for="floatingInput">Username</label>
+              </div>
+              <div class="form-floating info">
+                <input type="password" name="password" class="form-control email" id="floatingPassword"
+                  placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+            </div>
+            
+      
+              <div class="d-grid gap-1 mt-3 login-btn">
+                <button class=" btn btn-outline-primary" type="submit">Sign In</button>
+              </div>
+              <div class="help mt-3 d-flex justify-content-between">
+                <div class="">
+                  <input class="form-check-input " type="checkbox" value="True" id="flexCheckDefault">
+                  <label class="form-check-label fw-light" for="flexCheckDefault">
+                    Remember Me
+                  </label>
+                 
+                </div>
+                <label class="form fw-light" for="flexCheckDefault">
+                  Forgot password
+                </label>
+            
+              </div>
+              <div class="card-footer d-flex mt-4">
+                <p class="fw-light me-4">Don't have an account?</p>
+
+                <a href="{% url 'register' %}">  Register</button></a>
+
+              </div>
+              
+          </form>
+          
+
+        </div>
+
+      </div>
+
+  </div>
+  </div> 
+</div>
+
+{% endblock %}
