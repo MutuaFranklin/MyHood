@@ -11,7 +11,9 @@
     color: rgb(17, 60, 204) !important;
 } */
 
-
+.body a{
+    text-decoration: none;
+}
 .navbar{
     font-family: 'Sofia', cursive;
 
@@ -249,6 +251,16 @@
     display: none;
 
 }
+
+.updateProfile{
+    display: flex;
+    justify-content: center;
+    /* text-align: center; */
+}
+.updateProfile h6{
+    text-align: center;
+}
+
 
 
 body{

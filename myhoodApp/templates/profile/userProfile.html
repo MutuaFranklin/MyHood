@@ -129,7 +129,12 @@
                                         <div class="card mb-3 neighbor" style="max-width: 540px;">
                                             <div class="row g-0">
                                             <div class="col-md-4">
+                                                {% if neighbor.profile_pic %}
                                                 <img src="{{neighbor.profile_pic.url}}" class="img-fluid rounded-start" style="height: 120px;" alt="...">
+                                                {% else %}
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-fluid rounded-start" style="height: 120px;" alt="...">
+
+                                                {% endif %}
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -147,7 +152,7 @@
 
                                 </div>
                                 {% else %}
-                                <p>You share same</p>
+                                <p>You share same neighbors </p>
                                 {% endif%}
 
 

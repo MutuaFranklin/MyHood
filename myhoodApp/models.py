@@ -16,8 +16,8 @@ class Myhood(models.Model):
     location = models.CharField(max_length=60)
     sample_hood_image = CloudinaryField('Hood_image', blank=True)
     description = models.TextField()
-    police_contacts =models.CharField(max_length=60, blank=True)
-    hood_admin = models.ForeignKey("Profile", on_delete=models.DO_NOTHING, null=True)
+    police_contacts =models.CharField(max_length=60, blank=True, null=True)
+    hood_admin = models.ForeignKey("Profile", on_delete=models.CASCADE)
     
 
 
@@ -46,7 +46,7 @@ class Profile(models.Model):
     mobile = models.CharField(max_length=18, blank=True)
     bio =  models.TextField(blank=True, default='Welcome to my world')
     general_location = models.CharField(max_length = 50,blank=True)
-    hood = models.ForeignKey(Myhood, on_delete=models.SET_NULL, related_name='hood', blank=True, null=True)
+    hood = models.ForeignKey(Myhood, on_delete=models.DO_NOTHING, related_name='hood', blank=True, null=True)
 
 
     def __str__(self):
@@ -88,7 +88,7 @@ class UserPost(models.Model):
     post = HTMLField()
     date_posted = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_user')
-    hood = models.ForeignKey(Myhood, on_delete=models.SET_NULL, null=True)
+    hood = models.ForeignKey(Myhood, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.title} hood'
@@ -140,6 +140,7 @@ class Business(models.Model):
 
 
 class HealthFacilities(models.Model):
+    hospital_image = CloudinaryField('Hospital Image', blank=True)
     name = models.CharField(max_length=120)
     phone = models.CharField(max_length=18, blank=True)
     email = models.EmailField(max_length=254, blank=True)

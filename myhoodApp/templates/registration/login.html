@@ -10,10 +10,11 @@
       
      </div>
      <div class="col-md-5 login-form  mt-5">
-      {% if form.errors %}
-        <p> Password or Username is incorrect </p>
-      {% endif %}
+      
       <div class="panel panel-default">
+        {% if form.errors %}
+        <p style="color: red;"> Password or Username is incorrect </p>
+        {% endif %}
 
         <div class="panel-heading">
           <h5 class="text-center fw-light">Sign In</h5>

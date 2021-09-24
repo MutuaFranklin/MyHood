@@ -15,6 +15,8 @@ urlpatterns = [
     path('search/', views.search, name='search_business'),
     path('<username>/', views.userProfile, name='userProfile'),
     path('update/<int:pk>', UpdateProfileView.as_view(), name='update-profile'),
+    path('health-facility', views.registerHealthFacility,name='health_facility'),
+
 
 
 

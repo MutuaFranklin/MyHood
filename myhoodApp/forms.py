@@ -84,7 +84,41 @@ class RegisterBizForm(forms.ModelForm):
         }
 
 
+class RegisterMyhoodForm(forms.ModelForm):
+    class Meta:
+        model =  Myhood
+        fields = [ 'name','location','sample_hood_image', 'description','police_contacts']
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'location':forms.TextInput(attrs={'class': 'form-control'}), 
+            'sample_hood_image':forms.FileInput(attrs={'class': 'form-control'}),
+            'description':forms.TextInput(attrs={'class': 'form-control'}),
+            'police_contacts':forms.TextInput(attrs={'class': 'form-control'}),
+
+            
+            
         
+    }
+
+class RegisterHoodHospital(forms.ModelForm):
+    class Meta:
+        model =  HealthFacilities
+        fields = [ 'hospital_image','name','phone','email', 'description']
+        widgets = {
+            'hospital_image':forms.FileInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'phone':forms.TextInput(attrs={'class': 'form-control'}), 
+            'email':forms.TextInput(attrs={'class': 'form-control'}), 
+            'description':forms.TextInput(attrs={'class': 'form-control'}),
+
+            
+            
+        
+    }
+
+    
+
+    
 
 
   

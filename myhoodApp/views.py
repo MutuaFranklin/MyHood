@@ -1,8 +1,8 @@
-from myhoodApp.models import Business, Myhood, Profile, UserPost
+from myhoodApp.models import Business, HealthFacilities, Myhood, Profile, UserPost
 from django.contrib.auth.models import User
 from django.db.models.fields import PositiveSmallIntegerField
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegisterBizForm, UserRegistrationForm, UpdatePostForm, HoodMemberPostForm, UpdateUserProfileForm
+from .forms import RegisterBizForm, RegisterHoodHospital, RegisterMyhoodForm, UserRegistrationForm, UpdatePostForm, HoodMemberPostForm, UpdateUserProfileForm
 from .email import send_welcome_email
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -61,7 +61,25 @@ def home(request):
     myhood = Profile.objects.get(user=current_user)
     posts = UserPost.objects.filter(hood=current_user.profile.hood).all()
     business = Business.objects.filter(hood=current_user.profile.hood).all()
+    admin = Myhood.objects.filter(hood_admin=current_user.profile).all()
+    hospitals = HealthFacilities.objects.filter(hood=myhood.hood).all()
 
+    print(hospitals)
+
+    hoods= Myhood.objects.all()
+
+     #Register myhood
+    if request.method == 'POST':
+        hForm = RegisterMyhoodForm(request.POST, request.FILES)
+        if hForm.is_valid():
+            hood = hForm.save(commit=False)
+            print(hForm)
+            hood.hood_admin = current_user.profile
+            hood.save()
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    else:
+        hForm = RegisterMyhoodForm()
 
     # Make a Post
     if request.method == 'POST':
@@ -88,6 +106,19 @@ def home(request):
     else:
         bForm = RegisterBizForm()
 
+    # Register health facility
+    if request.method == 'POST':
+        hosForm = RegisterHoodHospital(request.POST, request.FILES)
+        if hosForm.is_valid():
+            hos = hosForm.save(commit=False)
+            hos.hood= myhood.hood
+            hos.save()
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    else:
+        hosForm = RegisterHoodHospital()
+    
+   
 
    
     context ={
@@ -96,7 +127,12 @@ def home(request):
         "myhood":myhood,
         "posts":posts,
         "business":business,
-        "bForm":bForm        
+        "bForm":bForm,
+        "hForm":hForm,
+        "hosForm":hosForm,
+        "hoods":hoods,
+        "admin":admin,
+        "hospitals":hospitals       
                   
        
       
@@ -113,7 +149,7 @@ def userProfile(request, username):
     myhood = Profile.objects.get(user=current_user)
     business = Business.objects.filter(owner=otherUser.profile).all()
     neighbors = Profile.objects.filter(hood=userProfile.hood).all()
-    print(neighbors)
+    # print(neighbors)
 
 
 
@@ -156,8 +192,8 @@ class UpdateProfileView(UpdateView):
 
         def get_success_url(self):
         
-            # return reverse_lazy('userProfile',args=[self.request.user.username]) 
-            return reverse_lazy('home',) 
+            return reverse_lazy('userProfile',args=[self.request.user.username]) 
+            # return reverse_lazy('home',) 
 
 def search(request):
     current_user = request.user
@@ -174,7 +210,7 @@ def search(request):
         searched_neighbor =Profile.search_user(search_neighbor)
 
 
-        print(searched_business)
+        # print(searched_business)
         business_message = f"{search_business}"
         neighbor_message = f"{search_business}"
 
