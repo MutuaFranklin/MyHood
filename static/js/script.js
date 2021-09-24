@@ -11,7 +11,7 @@ function showPosts() {
 
 
 }
-
+// show business hide  posts and neighbors
 function showBusiness() {
     document.getElementById("business").style.display = " block";
     document.getElementById("posts").style.display = "none";
