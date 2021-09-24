@@ -201,7 +201,7 @@
 
         {% for hood in hoods %}
 
-        <a href="{% url 'update-profile' request.user.id%}" class="btn btn-xs btn-info m-3">
+        <a href="{% url 'new-profile' request.user.id%}" class="btn btn-xs btn-info m-3">
             {{hood.name}}
         </a>
 
