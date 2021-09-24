@@ -93,6 +93,8 @@ def home(request):
     else:
         pForm = HoodMemberPostForm()
 
+
+
     # Register a business
     if request.method == 'POST':
         bForm = RegisterBizForm(request.POST, request.FILES)
@@ -106,20 +108,7 @@ def home(request):
     else:
         bForm = RegisterBizForm()
 
-    # Register health facility
-    if request.method == 'POST':
-        hosForm = RegisterHoodHospital(request.POST, request.FILES)
-        if hosForm.is_valid():
-            hos = hosForm.save(commit=False)
-            hos.hood= myhood.hood
-            hos.save()
-            return redirect(request.META.get('HTTP_REFERER'))
-
-    else:
-        hosForm = RegisterHoodHospital()
-    
-   
-
+    hosForm = RegisterHoodHospital()
    
     context ={
         
@@ -139,6 +128,34 @@ def home(request):
     }
 
     return render(request, 'myhood/home.html', context)
+
+def registerHealthFacility(request):
+    current_user = request.user
+    myhood = Profile.objects.get(user=current_user)
+
+
+
+     # Register health facility
+    if request.method == 'POST':
+        hosForm = RegisterHoodHospital(request.POST, request.FILES)
+        if hosForm.is_valid():
+            hos = hosForm.save(commit=False)
+            hos.hood= myhood.hood
+            hos.save()
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    else:
+        hosForm = RegisterHoodHospital()
+
+    context ={
+        "myhood":myhood,
+        "hosForm":hosForm,
+
+
+    }
+
+    return render(request, 'myhood/home.html', context)
+
 
 
 def userProfile(request, username):
