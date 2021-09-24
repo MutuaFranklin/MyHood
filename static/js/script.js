@@ -1,8 +1,8 @@
 
 
-
-
 // Profile
+
+// show posts
 function showPosts() {
     document.getElementById("posts").style.display = " block";
     document.getElementById("posts").style.display = " flex";  
