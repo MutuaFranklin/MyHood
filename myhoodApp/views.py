@@ -64,7 +64,7 @@ def home(request):
     admin = Myhood.objects.filter(hood_admin=current_user.profile).all()
     hospitals = HealthFacilities.objects.filter(hood=myhood.hood).all()
 
-    print(hospitals)
+    # print(hospitals)
 
     hoods= Myhood.objects.all()
 
@@ -73,7 +73,6 @@ def home(request):
         hForm = RegisterMyhoodForm(request.POST, request.FILES)
         if hForm.is_valid():
             hood = hForm.save(commit=False)
-            print(hForm)
             hood.hood_admin = current_user.profile
             hood.save()
             return redirect(request.META.get('HTTP_REFERER'))
