@@ -73,6 +73,7 @@ Run source virtual/bin/activate to activate the virtual environment and python m
 - Bootstrap
 - CSS
 - PostgreSQL
+- JavaScript
 
 ## Live link
 
