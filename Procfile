@@ -1,2 +1,2 @@
-web: gunicorn awards.wsgi --log-file -
+web: gunicorn myhood.wsgi --log-file -
 
