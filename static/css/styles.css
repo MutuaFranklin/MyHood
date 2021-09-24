@@ -550,7 +550,7 @@ body .fc-widget-header a {
 }
 
 #respofooter{
-    margin-top: 1%;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     color: rgb(4, 4, 87);
