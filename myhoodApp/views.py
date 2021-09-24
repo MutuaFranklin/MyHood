@@ -197,6 +197,22 @@ def userProfile(request, username):
 
     return render(request, 'profile/userProfile.html', context)
 
+
+class NewProfileUpdateView(UpdateView):
+        model=Profile
+        slug_field = "username"
+        form_class =UpdateUserProfileForm
+        template_name ='profile/editProfile.html'
+        
+        def get_queryset(self): 
+            return Profile.objects.all()
+
+
+        def get_success_url(self):
+        
+            # return reverse_lazy('userProfile',args=[self.request.user.username]) 
+            return reverse_lazy('home',) 
+
 class UpdateProfileView(UpdateView):
         model=Profile
         slug_field = "username"
