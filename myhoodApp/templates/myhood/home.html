@@ -4,7 +4,7 @@
 
 <div class="container-fluid home">
 
-
+<!-- Box -->
     <div class=" row top-view">
         {% if myhood.hood.sample_hood_image %}
         <div class="col-md-2 box hood-image " style="background-image: url( {{myhood.hood.sample_hood_image.url}}   );">
@@ -40,8 +40,8 @@
         </div>
 
         <div class="col-md-2 box health-icon">
-            <h1>0</h1>
-            <a href=""><img src="{% static 'images/hospital_red.png' %}" style="height: 70px;" alt=""></a>
+            <h1>{{hospitals.count}}</h1>
+            <a href="#hood-hospitals"><img src="{% static 'images/hospital_red.png' %}" style="height: 70px;" alt=""></a>
             <p class="mt-2">Health facilities </p>
 
         </div>
@@ -142,7 +142,7 @@
 
             </div>
             <!-- HEALTH FACILITIES -->
-            <h6 class="mt-3" id="hood-business">Hood Health Facilities</h6>
+            <h6 class="mt-3" id="hood-hospitals">Hood Health Facilities</h6>
             {% for admin in admin %}
                 
                 {% if admin.name == myhood.hood.name %}
@@ -151,10 +151,9 @@
                 </button>
                 {% endif %}
             {% endfor %}
-            {% include "modals/registerHospital.html" %}
-            <div class="col-md-12 home-health" id="homeHealth">
+            <div class="col-md-12 d-flex" >
                 <div class="row">
-                    {% for hos in hospitals %}
+                {% for hos in hospitals %}
 
                         <div class="card m-2" style="width: 24rem;">
                             <img src="{{hos.hospital_image.url}}" class="card-img-top mt-2" height="200" alt="...">
@@ -166,9 +165,9 @@
                             </div>
                             <div class="card-footer d-flex justify-content-center">
                                 <img src="{% static 'images/icon.jpg' %}" data-bs-toggle="modal"
-                                    data-bs-target="#businessDetails{{biz.id}}" height="90" alt="">
+                                    data-bs-target="#healthFacility{{hos.id}}" height="90" alt="">
 
-                                <!-- {% include "modals/businessDetails.html" %} -->
+                                {% include "modals/healthFacilityDetails.html" %}
                             </div>
 
                         </div>
@@ -178,12 +177,16 @@
                     <p>No registered hospital in your hood</p>
 
                     {% endfor %}
-
-
-
                 </div>
 
             </div>
+            {% include "modals/registerHospital.html" %}
+
+
+            </div>
+            
+
+        
 
         </div>
     </div>
