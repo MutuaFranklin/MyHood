@@ -64,7 +64,6 @@ def home(request):
     admin = Myhood.objects.filter(hood_admin=current_user.profile).all()
     hospitals = HealthFacilities.objects.filter(hood=myhood.hood).all()
 
-    # print(hospitals)
 
     hoods= Myhood.objects.all()
 
