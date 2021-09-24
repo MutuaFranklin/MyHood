@@ -165,7 +165,6 @@ def userProfile(request, username):
     myhood = Profile.objects.get(user=current_user)
     business = Business.objects.filter(owner=otherUser.profile).all()
     neighbors = Profile.objects.filter(hood=userProfile.hood).all()
-    # print(neighbors)
 
 
 
