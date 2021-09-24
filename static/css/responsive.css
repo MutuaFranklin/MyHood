@@ -8,13 +8,6 @@
   
   /* Small devices (portrait tablets and large phones, 600px and up) */
   @media only screen and (min-width: 600px)and (max-width:991px){
-    .featured{
-        height: 90rem !important;
-    
-        
-
-        
-    }
     
   
   }
